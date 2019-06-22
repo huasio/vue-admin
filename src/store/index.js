@@ -7,13 +7,13 @@ Vue.use(Vuex)
 const moduleFiles = require.context('./modules', true, /\.js$/)
 
 const modules = moduleFiles.keys().reduce((modules, path) => {
-  var name = path.replace(/^\.\/(.*)\.\w+$/, '$1')
+  var name = path.replace(/\.\/(.*)\.\w+$/, '$1')
   var value = moduleFiles(path)
 
-  modules[name] = value.default
+  modules[name] = value
 
   return modules
-}, {})
+})
 
 const state = {
 

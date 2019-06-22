@@ -1,7 +1,6 @@
 <template>
-	<div id="app">
-		<router-view></router-view>
-	</div>
+  <div id="app">
+  </div>
 </template>
 <script>
 export default {
@@ -10,7 +9,4 @@ export default {
 </script>
 
 <style lang="scss">
-	body {
-		min-width: 500px;
-	}
 </style>
