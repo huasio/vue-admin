@@ -5,7 +5,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 
-
 /**
  * 有几种情况：
  * 1. 已经登陆了访问登陆页面，需要跳转到首页
@@ -20,17 +19,16 @@ NProgress.configure({ showSpinner: false })
 const whiteList = ['/login']
 
 router.beforeEach(async (to, from, next) => {
-
   NProgress.start()
 
-  const hasToken = getToken();
+  document.title = to.meta.title || ' Vue admin'
+
+  const hasToken = getToken()
 
   if (hasToken) {
-
     if (to.path == '/login') {
       next({ path: '/' })
     } else {
-
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
 
       if (hasRoles) {
@@ -46,18 +44,19 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           await store.dispatch('user/resetToken')
           Message.error(error || '全局前置钩子这里有误')
-          next({ path: `/login?redirect=${to.path}` })
+          next()
+
+          // next({ path: `/login?redirect=${to.path}` })
           NProgress.done()
         }
       }
     }
-
   } else {
-
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next({ path: `/login?redirect=${to.path}` })
+      next()
+      // next({ path: `/login?redirect=${to.path}` })
       NProgress.done()
     }
   }
@@ -66,4 +65,3 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach(() => {
   NProgress.done()
 })
-

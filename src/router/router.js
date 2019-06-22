@@ -53,10 +53,11 @@ export const noHandleRoutes = [
   {
     path: '/profile',
     component: Layout,
+    hidden: true,
     redirect: '/profile/index',
     children: [
       {
-        path: 'index',
+        path: '/profile/index',
         name: 'Profile.index',
         component: () => import('@/views/profile/index'),
         meta: { title: 'Profile', icon: 'profile' }
@@ -72,13 +73,15 @@ export const dynamicRoutes = [
     meta: {
       title: 'Permissions', icon: 'lock'
     },
-    redirect: '/permission/roles',
-    roles: ['admin','permissions','roles'],
+    alwaysShow: true,
+    redirect: '/permissions/roles',
+    roles: ['admin', 'permissions', 'roles'],
     children: [
       {
-        path: 'roles',
-        name: "Permissions.Roles",
-        meta: {title:"Roles", roles: ['permissions']}
+        path: '/permissions/roles',
+        name: 'Permissions.Roles',
+        component: () => import('@/views/permissions/roles'),
+        meta: { title: 'Roles', roles: ['permissions'] }
       }
     ]
   }

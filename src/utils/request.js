@@ -20,7 +20,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    console.log("location: 请求拦截")
+    console.log('location: 请求拦截')
     console.log(error)
     return Promise.reject(error)
   }
@@ -48,7 +48,6 @@ service.interceptors.response.use(
       })
 
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-
         MessageBox.confirm('您已经登出,您可以取消以停留在此页面,或再次登录,确认登出？', {
           confirmButtonText: '重新登陆',
           cancelButtonText: '取消',
@@ -64,12 +63,12 @@ service.interceptors.response.use(
 
       // 返回一个 Promise 对象
       return Promise.reject(new Error(res.message || 'Error'))
-    } else {// 成功获取到数据
+    } else { // 成功获取到数据
       return res
     }
   },
   error => {
-    console.log("location: 响应拦截")
+    console.log('location: 响应拦截')
     Message({
       message: error.message,
       type: 'error',

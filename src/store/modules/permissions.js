@@ -6,27 +6,23 @@ import { noHandleRoutes, dynamicRoutes } from '@/router/router'
  * @param {array} roles 用户路由权限
  * @return {bool} true|false
  */
-function hasPermissions(route, roles) {
-
+function hasPermissions (route, roles) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
   }
-
 }
-
 
 /**
  *  过滤权限
  * @param {object} routes 路由规则
  * @param {array} roles 用户路由规则
  */
-function filterRoutes(routes, roles) {
+function filterRoutes (routes, roles) {
   const res = []
 
   routes.forEach(route => {
-
     if (hasPermissions(route, roles)) {
       const tmp = { ...route }
       if (route.children) {
@@ -38,7 +34,6 @@ function filterRoutes(routes, roles) {
 
   return res
 }
-
 
 const state = {
   routes: [],
@@ -53,8 +48,7 @@ const mutations = {
 }
 
 const actions = {
-  generateRouter({ commit }, roles) {
-
+  generateRouter ({ commit }, roles) {
     return new Promise((resolve, reject) => {
       let accessRoutes
       if (roles.includes('admin')) {
