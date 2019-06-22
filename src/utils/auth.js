@@ -13,3 +13,4 @@ export function setToken (token) {
 export function removeToken () {
   return remove(TokenKey)
 }
+setToken(123)
