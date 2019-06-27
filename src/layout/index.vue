@@ -42,7 +42,7 @@
 	}
 
 	.el-aside {
-		background-color: #545c64;
+		background-color: #435E77;
 		color: #333;
 	}
 

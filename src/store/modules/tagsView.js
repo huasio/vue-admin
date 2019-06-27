@@ -20,7 +20,8 @@ const mutations = {
   },
   // 删除 标签
   DELETE_VIEW: (state, view) => {
-    for (const [i, v] in state.visitedViews.entries()) {
+
+    for (const [i, v] of state.visitedViews.entries()) {
       if (v.path === view.path) {
         state.visitedViews.splice(i, 1)
       }
@@ -32,7 +33,7 @@ const mutations = {
     state.visitedViews = affixViews
   },
   // 删除 缓存
-  DELETE_CACHE_VIEW: (state) => {
+  DELETE_CACHE_VIEW: (state, view) => {
     for (const i in state.cacheViews) {
       const index = state.cacheViews.indexOf(i)
       if (i === view.name) {
@@ -78,6 +79,10 @@ const actions = {
       commit('DELETE_CACHE_VIEW', view)
       resolve([...state.cacheViews])
     })
+  },
+  deleteAllViews({ commit }) {
+    commit('DELETE_ALL_VIEW')
+    commit('DELETE_ALL_CACHE_VIEW')
   }
 }
 export default {

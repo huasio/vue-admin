@@ -5,7 +5,7 @@
 			<el-menu
 				:default-active="activeMenu"
 				class="el-menu-vertical-demo"
-				background-color="#545c64"
+				background-color="#435E77"
 				text-color="#fff"
 				active-text-color="#ffd04b"
 				:collapse="sidebar"

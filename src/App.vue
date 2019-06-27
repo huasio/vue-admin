@@ -11,6 +11,6 @@ export default {
 
 <style lang="scss">
 	body {
-		min-width: 500px;
+		min-width: 756px;
 	}
 </style>

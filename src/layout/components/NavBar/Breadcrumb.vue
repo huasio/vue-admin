@@ -68,15 +68,15 @@
 			// 解析参数
 			pathCompile(path) {
 				const { params } = this.$route;
-        var toPath = pathToRegexp.compile(path);
+				var toPath = pathToRegexp.compile(path);
 				return toPath(params);
 			},
-      // 处理 path '/user/:id'
-      // 将 id 转为有效的 url
+			// 处理 path '/user/:id'
+			// 将 id 转为有效的 url
 			handleLink(item) {
 				const { redirect, path } = item;
 				if (redirect) {
-          this.$router.push(redirect);
+					this.$router.push(redirect);
 					return;
 				}
 				this.$router.push(this.pathCompile(path));
