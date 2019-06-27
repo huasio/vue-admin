@@ -1,13 +1,13 @@
 <template>
 	<el-row>
-		<el-col :span="21">
+		<el-col :span="18">
 			<el-tabs v-model="active" @tab-remove="closeSelectTag">
 				<el-tab-pane
 					v-for="tag of visitedViews"
 					:key="tag.path"
 					:name="tag.name"
 					:closable="tag.meta && !tag.meta.affix"
-					:handleDefault="handleDefault(tag)"
+					ref="tag"
 				>
 					<template slot="label">
 						<router-link :to="tag.path" tag="span" class="c">{{tag.title}}</router-link>
@@ -15,10 +15,13 @@
 				</el-tab-pane>
 			</el-tabs>
 		</el-col>
-		<el-col :span="3" class="border-color">
-			<el-row type="flex" justify="end">
+		<el-col :span="6" class="border-color">
+			<el-row type="flex" justify="end" class="tag-span">
+				<el-badge class="item">
+					<el-button size="small" @click.native="refreshSelectTag()" plain>刷新</el-button>
+				</el-badge>
 				<el-badge :value="visitedViews.length" class="item">
-					<el-button size="small" @click.native="closeAllViews">关闭全部</el-button>
+					<el-button size="small" type="danger" @click.native="closeAllViews" plain>关闭全部</el-button>
 				</el-badge>
 			</el-row>
 		</el-col>
@@ -52,7 +55,6 @@
 				"addView",
 				"addVisitedView",
 				"deleteView",
-				"deleteVisitedView",
 				"deleteCacheView",
 				"deleteAllViews"
 			]),
@@ -69,6 +71,7 @@
 				if (name) {
 					this.$store.dispatch("tagsView/addView", this.$route);
 				}
+				this.active = this.$route.name;
 			},
 			filterAffix(routes, basePath = "/") {
 				let tags = [];
@@ -134,11 +137,12 @@
 				}
 				this.toNextView(this.affixTags, this.currentSelectTag, null);
 			},
-			handleDefault(view) {
-				if (this.isActive(view)) {
-					this.active = this.$route.name;
-				}
-				this.currentSelectTag = view;
+			refreshSelectTag() {
+				this.deleteCacheView(this.$route);
+				const { fullPath } = this.$route;
+				this.$router.replace({
+					path: "/redirect" + fullPath
+				});
 			}
 		},
 		mounted() {
@@ -151,11 +155,13 @@
 	.el-tabs__item {
 		height: initial;
 		line-height: initial;
-
-		.tag-span {
-			display: inline-block;
-			height: 40px;
-			line-height: 40px;
+	}
+	.tag-span .item:nth-child(1) {
+		margin-right: 6px;
+	}
+	.tag-span {
+		.item:nth-child(1) {
+			margin-right: 6px;
 		}
 	}
 	.border-color {
