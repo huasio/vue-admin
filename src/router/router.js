@@ -40,13 +40,13 @@ export const noHandleRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashdoard',
+    redirect: '/dashboard',
     children: [
       {
-        path: '/dashdoard',
-        name: 'Dashdoard',
-        component: () => import('@/views/dashdoard/index'),
-        meta: { title: 'Dashdoard', icon: 'dashdoard' }
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Dashboard', icon: 'dashboard' }
       }
     ]
   },
@@ -71,11 +71,11 @@ export const dynamicRoutes = [
     path: '/permissions',
     component: Layout,
     meta: {
-      title: 'Permissions', icon: 'lock'
+      title: 'Permissions', icon: 'lock',
+      roles: ['admin', 'permissions', 'roles']
     },
     alwaysShow: true,
     redirect: '/permissions/roles',
-    roles: ['admin', 'permissions', 'roles'],
     children: [
       {
         path: '/permissions/roles',
@@ -84,5 +84,6 @@ export const dynamicRoutes = [
         meta: { title: 'Roles', roles: ['permissions'] }
       }
     ]
-  }
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ]

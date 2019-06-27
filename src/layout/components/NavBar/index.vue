@@ -27,32 +27,32 @@
 </template>
 
 <script>
-import Hamburger from '@/components/Hamburger'
-import Breadcrumb from './Breadcrumb'
-import { mapGetters } from 'vuex'
-export default {
-  data () {
-    return {
-      activeIndex: '1',
-      activeIndex2: '1'
-    }
-  },
-  components: {
-    Hamburger,
-    Breadcrumb
-  },
-  computed: {
-    ...mapGetters(['sidebar', 'avatar'])
-  },
-  methods: {
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    toggleSideBar () {
-      this.$store.dispatch('app/toggleSideBar')
-    }
-  }
-}
+	import Hamburger from "@/components/Hamburger";
+	import Breadcrumb from "./Breadcrumb";
+	import { mapGetters } from "vuex";
+	export default {
+		data() {
+			return {
+				activeIndex: "1",
+				activeIndex2: "1"
+			};
+		},
+		components: {
+			Hamburger,
+			Breadcrumb
+		},
+		computed: {
+			...mapGetters(["sidebar", "avatar"])
+		},
+		methods: {
+			handleSelect(key, keyPath) {
+				console.log(key, keyPath);
+			},
+			toggleSideBar() {
+				this.$store.dispatch("app/toggleSideBar");
+			}
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
@@ -65,8 +65,14 @@ export default {
 	}
 	.hamburger {
 		flex: 1;
-    text-align: center;
-    min-width: 50px;
-    margin-right: 10px;
+		text-align: center;
+		min-width: 50px;
+		margin-right: 10px;
+	}
+	.el-menu.el-menu--horizontal {
+		border-bottom: none;
+	}
+	.el-menu {
+		background-color: initial !important;
 	}
 </style>

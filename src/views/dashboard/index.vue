@@ -1,5 +1,5 @@
 <template>
-	<div>this is a dashdoard page!</div>
+	<div>this is a dashboard page!</div>
 </template>
 
 <script>

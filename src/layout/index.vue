@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<el-aside width="">
+			<el-aside width>
 				<SideBar/>
 			</el-aside>
 			<el-container>
@@ -9,6 +9,7 @@
 					<NavBar/>
 				</el-header>
 				<el-main>
+					<TagsView/>
 					<AppMain/>
 				</el-main>
 			</el-container>
@@ -17,14 +18,15 @@
 </template>
 
 <script>
-import { AppMain, NavBar, SideBar } from './components'
-export default {
-  components: {
-    AppMain,
-    NavBar,
-    SideBar
-  }
-}
+	import { AppMain, NavBar, SideBar, TagsView } from "./components";
+	export default {
+		components: {
+			AppMain,
+			NavBar,
+			SideBar,
+			TagsView
+		}
+	};
 </script>
 
 <style>
@@ -36,6 +38,7 @@ export default {
 		color: #333;
 		line-height: 60px;
 		padding: 0 !important;
+		border-bottom: 1px solid #e6e6e6;
 	}
 
 	.el-aside {
@@ -44,9 +47,8 @@ export default {
 	}
 
 	.el-main {
-		background-color: #e9eef3;
 		color: #333;
-		padding: 0x;
+		padding: 10px 20px !important;
 		height: calc(100vh - 60px);
 	}
 	.el-scrollbar__thumb {

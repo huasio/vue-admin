@@ -56,6 +56,8 @@
 			Link
 		},
 		data() {
+			// 临时存放 children item
+			// 只有当 children 有且仅有一个时有效
 			this.onlyOneChild = null;
 			return {
 				// onlyOneChild: null
@@ -68,8 +70,6 @@
 					if (item.hidden) {
 						return false;
 					} else {
-						// 临时存放 children item
-						// 只有当 children 有且仅有一个时有效
 						this.onlyOneChild = item;
 						return true;
 					}

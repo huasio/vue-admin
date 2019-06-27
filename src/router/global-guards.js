@@ -46,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
           Message.error(error || '全局前置钩子这里有误')
           next()
 
-          // next({ path: `/login?redirect=${to.path}` })
+          next({ path: `/login?redirect=${to.path}` })
           NProgress.done()
         }
       }
@@ -56,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       next()
-      // next({ path: `/login?redirect=${to.path}` })
+      next({ path: `/login?redirect=${to.path}` })
       NProgress.done()
     }
   }
