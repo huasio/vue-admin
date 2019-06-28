@@ -53,7 +53,7 @@
 			},
 			async logout() {
 				await this.$store.dispatch("user/logout");
-				this.$router.repalce({
+				this.$router.replace({
 					path: `/login?redirect=${this.$route.fullPath}`
 				});
 			}
