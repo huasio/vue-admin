@@ -24,11 +24,6 @@ export const noHandleRoutes = [
     component: () => import('@/views/login/index')
   },
   {
-    path: '/logout',
-    hidden: true,
-    component: () => import('@/views/login/logout')
-  },
-  {
     path: '/404',
     hidden: true,
     component: () => import('@/views/error-page/404')
