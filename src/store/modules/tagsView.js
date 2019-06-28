@@ -1,6 +1,6 @@
 const state = {
   visitedViews: [],
-  cacheViews: []
+  cachedViews: []
 }
 const mutations = {
   // 添加 标签
@@ -14,9 +14,9 @@ const mutations = {
   },
   // 添加 需要缓存的页面
   ADD_CACHE_VIEW: (state, view) => {
-    if (state.cacheViews.includes(view.name)) return
+    if (state.cachedViews.includes(view.name)) return
     if (view.meta.noCache) return
-    state.cacheViews.push(view.name)
+    state.cachedViews.push(view.name)
   },
   // 删除 标签
   DELETE_VIEW: (state, view) => {
@@ -34,8 +34,8 @@ const mutations = {
   },
   // 删除 缓存
   DELETE_CACHE_VIEW: (state, view) => {
-    for (const i in state.cacheViews) {
-      const index = state.cacheViews.indexOf(i)
+    for (const i in state.cachedViews) {
+      const index = state.cachedViews.indexOf(i)
       if (i === view.name) {
         state.visitedViews.splice(index, 1)
         break
@@ -44,7 +44,7 @@ const mutations = {
   },
   // 删除 所有缓存
   DELETE_ALL_CACHE_VIEW: (state) => {
-    state.cacheViews = []
+    state.cachedViews = []
   }
 }
 const actions = {
@@ -64,7 +64,7 @@ const actions = {
       dispatch('deleteCacheView', view)
       resolve({
         visitedViews: [...state.visitedViews],
-        cacheViews: [...state.cacheViews]
+        cachedViews: [...state.cachedViews]
       })
     })
   },
@@ -77,7 +77,7 @@ const actions = {
   deleteCacheView({ commit, state }, view) {
     return new Promise(resolve => {
       commit('DELETE_CACHE_VIEW', view)
-      resolve([...state.cacheViews])
+      resolve([...state.cachedViews])
     })
   },
   deleteAllViews({ commit }) {

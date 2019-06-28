@@ -8,18 +8,18 @@
 		</el-col>
 		<el-col :sm="{span:7}" :xs="{span:22}">
 			<el-menu
-				:default-active="activeIndex"
+				:default-active="active"
 				class="el-menu-demo"
 				mode="horizontal"
 				@select="handleSelect"
+				:router="true"
 			>
 				<el-submenu index="4-1">
 					<template slot="title">
 						<img :src="avatar" class="avatar" width="40" height="40" alt>
 					</template>
-					<el-menu-item index="4-1-1">选项1</el-menu-item>
-					<el-menu-item index="4-1-2">选项2</el-menu-item>
-					<el-menu-item index="4-1-3">选项3</el-menu-item>
+					<el-menu-item index="/profile/index">个人中心</el-menu-item>
+					<el-menu-item @click="logout">退出</el-menu-item>
 				</el-submenu>
 			</el-menu>
 		</el-col>
@@ -32,17 +32,17 @@
 	import { mapGetters } from "vuex";
 	export default {
 		data() {
-			return {
-				activeIndex: "1",
-				activeIndex2: "1"
-			};
+			return {};
 		},
 		components: {
 			Hamburger,
 			Breadcrumb
 		},
 		computed: {
-			...mapGetters(["sidebar", "avatar"])
+			...mapGetters(["sidebar", "avatar"]),
+			active() {
+				return this.$route.path;
+			}
 		},
 		methods: {
 			handleSelect(key, keyPath) {
@@ -50,6 +50,12 @@
 			},
 			toggleSideBar() {
 				this.$store.dispatch("app/toggleSideBar");
+			},
+			async logout() {
+				await this.$store.dispatch("user/logout");
+				this.$router.repalce({
+					path: `/login?redirect=${this.$route.fullPath}`
+				});
 			}
 		}
 	};

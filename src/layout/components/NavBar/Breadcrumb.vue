@@ -38,13 +38,20 @@
 		methods: {
 			// 获取标签
 			getBreadcrumb() {
+				var tmp = [];
 				// 获取匹配的所有路由
-				let matched = this.$route.matched.filter(
-					item =>
+				let matched = this.$route.matched.filter(item => {
+					const bool =
 						item.meta &&
 						item.meta.title &&
-						item.meta.breadcrumb !== false
-				);
+						item.meta.breadcrumb !== false;
+
+					if (bool && !tmp.includes(item.meta.title)) {
+            item.meta && tmp.push(item.meta.title);
+            return true
+					}
+					return false;
+				});
 				const first = matched[0];
 				// 确保 dashboard 是第一个
 				if (!this.isDashdoard(first)) {

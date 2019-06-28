@@ -14,14 +14,14 @@ import { Message } from 'element-ui'
  * 5. 免登录白名单，则直接 next
  * 6. 若是遇到意外错误，则清空 token 避免进入无限循环
  */
-NProgress.configure({ showSpinner: false })
+NProgress.configure({ showSpinner: false, speed: 1000 })
 
 const whiteList = ['/login']
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
-  document.title = to.meta.title || ' Vue admin'
+  document.title = to.meta.title && to.meta.title + ' - 后台管理' || '后台管理'
 
   const hasToken = getToken()
 

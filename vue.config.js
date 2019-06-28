@@ -30,6 +30,14 @@ module.exports = {
       }
     }
   },
+  chainWebpack(config) {
+    // url-loader 不加载 icons 下面的 svg
+    // 由 svg-sprite-loader 加载
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
+    config.module.rule('icons').test(/\.svg$/).include.add(resolve('src/icons')).end().use('svg-sprite-loader').loader('svg-sprite-loader').options({
+      symbolId: 'icon-[name]'
+    }).end()
+  },
   productionSourceMap: false,
   lintOnSave: false
 }

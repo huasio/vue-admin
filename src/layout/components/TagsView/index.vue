@@ -18,10 +18,24 @@
 		<el-col :span="6" class="border-color">
 			<el-row type="flex" justify="end" class="tag-span">
 				<el-badge class="item">
-					<el-button size="small" @click.native="refreshSelectTag()" plain>刷新</el-button>
+					<el-button
+						size="small"
+						type="primary"
+						@click="refreshSelectTag"
+						circle
+						icon="el-icon-refresh"
+						title="刷新当前标签"
+					></el-button>
 				</el-badge>
 				<el-badge :value="visitedViews.length" class="item">
-					<el-button size="small" type="danger" @click.native="closeAllViews" plain>关闭全部</el-button>
+					<el-button
+						size="small"
+						type="danger"
+						@click="closeAllViews"
+						circle
+						icon="el-icon-delete"
+						title="关闭全部标签"
+					></el-button>
 				</el-badge>
 			</el-row>
 		</el-col>
@@ -138,10 +152,13 @@
 				this.toNextView(this.affixTags, this.currentSelectTag, null);
 			},
 			refreshSelectTag() {
-				this.deleteCacheView(this.$route);
-				const { fullPath } = this.$route;
-				this.$router.replace({
-					path: "/redirect" + fullPath
+				this.deleteCacheView(this.$route).then(() => {
+					const { fullPath } = this.$route;
+					this.$nextTick(() => {
+						this.$router.replace({
+							path: "/redirect" + fullPath
+						});
+					});
 				});
 			}
 		},
@@ -158,15 +175,39 @@
 	}
 	.tag-span .item:nth-child(1) {
 		margin-right: 6px;
-	}
-	.tag-span {
-		.item:nth-child(1) {
-			margin-right: 6px;
+		button:active {
+			animation: refresh 0.3s;
 		}
+	}
+	.tag-span .item:nth-child(2) button:active {
+		animation: delete 0.6s;
 	}
 	.border-color {
 		height: 40px;
 		line-height: 40px;
 		border-bottom: 2px solid #e4e7ed;
+	}
+
+	@keyframes refresh {
+		from {
+			transform: rotate(0deg);
+		}
+		from {
+			transform: rotate(360deg);
+		}
+	}
+	@keyframes delete {
+		0% {
+			transform: rotate(30deg);
+			transform: translateX(6px);
+		}
+		50% {
+			transform: rotate(-30deg);
+			transform: translateX(-6px);
+		}
+		100% {
+			transform: rotate(0deg);
+			transform: translateX(0px);
+		}
 	}
 </style>

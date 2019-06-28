@@ -1,5 +1,6 @@
 import { getToken, removeToken } from '@/utils/auth'
 import { getInfoApi } from '@/api/user'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -56,6 +57,13 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken()
+      resolve()
+    })
+  },
+  logout({ dispatch }) {
+    return new Promise((resolve, reject) => {
+      dispatch('resetToken')
+      resetRouter()
       resolve()
     })
   }
