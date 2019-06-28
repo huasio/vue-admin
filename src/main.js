@@ -6,7 +6,7 @@ import '@/router/global-guards'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
-
+import '@/icons'
 Vue.use(Element)
 
 Vue.config.productionTip = false

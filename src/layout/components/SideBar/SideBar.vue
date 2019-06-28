@@ -12,8 +12,10 @@
 		>
 			<Link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
 				<el-menu-item :index="resolvePath(onlyOneChild.path)">
-					<i class="el-icon-location"></i>
-					<span slot="title">{{onlyOneChild.meta.title}}</span>
+					<Item
+						:icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
+						:title="onlyOneChild.meta.title"
+					/>
 				</el-menu-item>
 			</Link>
 		</template>
@@ -21,8 +23,7 @@
 		<!-- 若是没有需要显示 item 那么继续处理children -->
 		<el-submenu v-else :index="resolvePath(item.path)">
 			<template slot="title">
-				<i class="el-icon-location"></i>
-				<span v-if="item.meta" slot="title">{{item.meta.title}}</span>
+				<Item :icon="item.meta&&item.meta.icon" :title="item.meta.title"/>
 			</template>
 			<SideBar
 				v-for="child in item.children"
@@ -37,6 +38,7 @@
 <script>
 	import path from "path";
 	import Link from "./Link";
+	import Item from "./Item";
 	import { isExternal } from "@/utils/validations";
 	export default {
 		name: "SideBar",
@@ -53,9 +55,12 @@
 			}
 		},
 		components: {
-			Link
+			Link,
+			Item
 		},
 		data() {
+			// 临时存放 children item
+			// 只有当 children 有且仅有一个时有效
 			this.onlyOneChild = null;
 			return {
 				// onlyOneChild: null
@@ -68,8 +73,6 @@
 					if (item.hidden) {
 						return false;
 					} else {
-						// 临时存放 children item
-						// 只有当 children 有且仅有一个时有效
 						this.onlyOneChild = item;
 						return true;
 					}

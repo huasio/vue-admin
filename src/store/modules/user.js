@@ -1,5 +1,6 @@
 import { getToken, removeToken } from '@/utils/auth'
 import { getInfoApi } from '@/api/user'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -32,7 +33,7 @@ const mutations = {
  * 调用用户用信息接口，传入 token 以获取用户信息
  */
 const actions = {
-  getInfo ({ commit, state }) {
+  getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfoApi(state.token).then(response => {
         const { data } = response
@@ -51,11 +52,18 @@ const actions = {
       })
     })
   },
-  resetToken ({ commit }) {
+  resetToken({ commit }) {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken()
+      resolve()
+    })
+  },
+  logout({ dispatch }) {
+    return new Promise((resolve, reject) => {
+      dispatch('resetToken')
+      resetRouter()
       resolve()
     })
   }

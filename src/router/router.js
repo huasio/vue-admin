@@ -20,6 +20,7 @@ export const noHandleRoutes = [
   {
     path: '/login',
     hidden: true,
+    meta: { title: "Login" },
     component: () => import('@/views/login/index')
   },
   {
@@ -40,13 +41,13 @@ export const noHandleRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashdoard',
+    redirect: '/dashboard',
     children: [
       {
-        path: '/dashdoard',
-        name: 'Dashdoard',
-        component: () => import('@/views/dashdoard/index'),
-        meta: { title: 'Dashdoard', icon: 'dashdoard' }
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -55,10 +56,11 @@ export const noHandleRoutes = [
     component: Layout,
     hidden: true,
     redirect: '/profile/index',
+    meta: { title: 'Profile' },
     children: [
       {
         path: '/profile/index',
-        name: 'Profile.index',
+        name: 'ProfileIndex',
         component: () => import('@/views/profile/index'),
         meta: { title: 'Profile', icon: 'profile' }
       }
@@ -71,11 +73,11 @@ export const dynamicRoutes = [
     path: '/permissions',
     component: Layout,
     meta: {
-      title: 'Permissions', icon: 'lock'
+      title: 'Permissions', icon: 'permission',
+      roles: ['admin', 'permissions', 'roles']
     },
     alwaysShow: true,
     redirect: '/permissions/roles',
-    roles: ['admin', 'permissions', 'roles'],
     children: [
       {
         path: '/permissions/roles',
@@ -84,5 +86,6 @@ export const dynamicRoutes = [
         meta: { title: 'Roles', roles: ['permissions'] }
       }
     ]
-  }
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ]
