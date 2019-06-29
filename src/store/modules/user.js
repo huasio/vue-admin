@@ -1,5 +1,5 @@
-import { getToken, removeToken } from '@/utils/auth'
-import { getInfoApi } from '@/api/user'
+import { getToken, removeToken, setToken } from '@/utils/auth'
+import { getInfoApi, loginApi, logoutApi } from '@/api/user'
 import { resetRouter } from '@/router'
 
 const state = {
@@ -60,14 +60,31 @@ const actions = {
       resolve()
     })
   },
-  logout({ dispatch }) {
+  login({ commit }, info) {
+    console.log(info)
     return new Promise((resolve, reject) => {
-      dispatch('resetToken')
-      resetRouter()
-      resolve()
+      loginApi({ user: info.user.trim(), pass: info.pass.trim() }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        delete data.token
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  logout({ dispatch, state }) {
+    return new Promise((resolve, reject) => {
+      logoutApi(state.token).then(() => {
+        dispatch('resetToken')
+        resetRouter()
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
-
 }
 
 export default {

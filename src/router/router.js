@@ -68,7 +68,7 @@ export const dynamicRoutes = [
     path: '/permissions',
     component: Layout,
     meta: {
-      title: 'Permissions', icon: 'permission',
+      title: 'Permission', icon: 'permission',
       roles: ['admin', 'permissions', 'roles']
     },
     alwaysShow: true,
@@ -76,7 +76,7 @@ export const dynamicRoutes = [
     children: [
       {
         path: '/permissions/roles',
-        name: 'Permissions.Roles',
+        name: 'Roles',
         component: () => import('@/views/permissions/roles'),
         meta: { title: 'Roles', roles: ['permissions'] }
       }

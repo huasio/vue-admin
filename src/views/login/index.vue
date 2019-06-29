@@ -5,44 +5,72 @@
 				<transition name="el-zoom-in-center">
 					<el-card v-show="isShow" class="box-card">
 						<div slot="header" class="clearfix">
-							<span>登录</span>
+							<el-row>
+								<el-col :span="12">
+									<el-row type="flex" justify="start">
+										<span>{{$t('login.title')}}</span>
+									</el-row>
+								</el-col>
+								<el-col :span="12">
+									<el-row type="flex" justify="end">
+										<Lang
+											:current-lang="currentLang"
+											:languages="languages"
+											@clickLang="clickLang"
+											:title="$t('general.lang.title')"
+										/>
+									</el-row>
+								</el-col>
+							</el-row>
 						</div>
 						<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px">
-							<el-form-item label="用户名" prop="user">
+							<el-form-item :label="$t('login.user')" prop="user">
 								<el-input
 									type="text"
+									ref="user"
 									tabindex="1"
 									v-model="ruleForm.user"
 									autocomplete="on"
-									placeholder="输入用户名/邮箱/手机号"
+									:placeholder="$t('login.message.user_required')"
 									prefix-icon="el-icon-user-solid"
 								></el-input>
 							</el-form-item>
 							<el-tooltip
 								v-model="capsLock"
 								class="item"
-								content="大写锁定"
+								:content="$t('login.message.caps_lock')"
 								effect="dark"
 								placement="right-end"
 								manual
 							>
-								<el-form-item label="密码" prop="pass">
+								<el-form-item :label="$t('login.pass')" prop="pass">
 									<el-input
 										type="password"
 										tabindex="2"
+										ref="pass"
 										v-model="ruleForm.pass"
-										placeholder="输入长度为 6-16 位的密码"
+										:placeholder="$t('login.message.pass_requried')"
 										autocomplete="on"
 										:show-password="true"
 										@keyup.native="listenKey"
 										@blur.prevent="listenBlur"
+										@keyup.enter.native="submitForm"
 										prefix-icon="el-icon-lock"
 									></el-input>
 								</el-form-item>
 							</el-tooltip>
 							<el-form-item>
-								<el-button type="primary" @click="submitForm('ruleForm')" :loading="loading">提交</el-button>
-								<el-button @click="resetForm('ruleForm')">重置</el-button>
+								<el-row>
+									<el-button
+										type="primary"
+										@click="submitForm"
+										style="width:100%;margin-bottom: 6px;"
+										:loading="loading"
+									>{{$t('login.title')}}</el-button>
+								</el-row>
+								<el-row>
+									<el-button @click="resetForm" style="width: 100%;">{{$t('general.reset')}}</el-button>
+								</el-row>
 							</el-form-item>
 						</el-form>
 					</el-card>
@@ -53,6 +81,8 @@
 </template>
 
 <script>
+	import { mapState, mapActions } from "vuex";
+	import Lang from "@/components/Language";
 	/**
 	 * 1. 密码可见
 	 * 2. 点击 button 之后，button 进入 loading
@@ -60,21 +90,24 @@
 	 * 4. 输入框自动获取焦点
 	 */
 	export default {
+		components: {
+			Lang
+		},
 		data() {
 			var validatePass = (rule, value, callback) => {
 				if (value === "") {
-					callback(new Error("请输入长度为 6-16 位的密码"));
+					callback(new Error(this.$t("login.message.pass_requried")));
 				} else if (value.length < 6) {
-					callback(new Error("密码长度小于 6 位"));
+					callback(new Error(this.$t("login.message.pass_min")));
 				} else if (value.length > 16) {
-					callback(new Error("密码长度大于 16 位"));
+					callback(new Error(this.$t("login.message.pass_max")));
 				} else {
 					callback();
 				}
 			};
 			var validationUser = (rule, value, callback) => {
 				if (value === "") {
-					callback(new Error("请输入用户名/邮箱/手机号"));
+					callback(new Error(this.$t("login.message.user_required")));
 				} else {
 					callback();
 				}
@@ -94,34 +127,44 @@
 				otherQuery: {}
 			};
 		},
+		computed: {
+			...mapState("lang", ["languages", "currentLang"])
+		},
 		mounted() {
 			this.otherQuery = this.getOtherQuery();
 			this.isShow = true;
+			if (this.ruleForm.user === "") {
+				this.$refs.user.focus();
+			} else if (this.ruleForm.pass === "") {
+				this.$refs.pass.focus();
+			}
 		},
 		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate(valid => {
+			...mapActions("lang", ["setLang"]),
+			submitForm() {
+				this.$refs.ruleForm.validate(valid => {
 					if (valid) {
-						this.$notify.error({
-							title: "错误",
-							message: "登录失败"
-            });
-
-						this.$router.replace({
-							path: this.$route.query.redirect || "/",
-							query: this.otherQuery
-						});
+						this.loading = true;
+						this.$store
+							.dispatch("user/login", this.ruleForm)
+							.then((resolve, reject) => {
+								this.loading = false;
+								this.$router.replace({
+									path: this.$route.query.redirect || "/",
+									query: this.otherQuery
+								});
+							})
+							.catch(error => {
+								this.loading = false;
+								console.log(error);
+							});
 					} else {
-						this.$notify.error({
-							title: "错误",
-							message: "请完善表单信息"
-						});
 						return false;
 					}
 				});
 			},
 			resetForm(formName) {
-				this.$refs[formName].resetFields();
+				this.$refs.ruleForm.resetFields();
 			},
 			/**
 			 * 几种情况:
@@ -157,14 +200,18 @@
 					}
 					return init;
 				}, {});
+			},
+			clickLang(lang) {
+				this.setLang(lang);
 			}
 		}
 	};
 </script>
-<style>
-	body {
-		background: url(https://konachan.net/sample/34e64202c2d6f1ded668eacb2ad5f9cd/Konachan.com%20-%20284897%20sample.jpg)
+<style scoped>
+	.form-main {
+		background: url(https://konachan.net/sample/ccceb7b7c3e2a2b77c2a6e8580c3c12f/Konachan.com%20-%20284958%20sample.jpg)
 			no-repeat center center/cover;
+		background-attchment: fixed;
 	}
 	.form-main {
 		height: 100vh;
@@ -174,7 +221,7 @@
 		height: 300px;
 		opacity: 0.9;
 	}
-	.el-card__body {
+	.el-form {
 		width: 400px !important;
 	}
 </style>

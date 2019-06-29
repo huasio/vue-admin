@@ -5,6 +5,7 @@ import { getToken } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: 'https://www.easy-mock.com/mock/5d088f627a2d233514f3eaad/wx',
+  // baseURL: 'http://127.0.0.1:9090',
   timeout: 5000
 })
 

@@ -14,12 +14,18 @@
 				@select="handleSelect"
 				:router="true"
 			>
+				<Lang
+					:current-lang="currentLang"
+					:languages="languages"
+					@clickLang="clickLang"
+					:title="$t('general.lang.title')"
+				/>
 				<el-submenu index="4-1">
 					<template slot="title">
 						<img :src="avatar" class="avatar" width="40" height="40" alt>
 					</template>
-					<el-menu-item index="/profile/index">个人中心</el-menu-item>
-					<el-menu-item @click="logout">退出</el-menu-item>
+					<el-menu-item index="/profile/index">{{$t('profile.user')}}</el-menu-item>
+					<el-menu-item @click="logout" index>{{$t('logout')}}</el-menu-item>
 				</el-submenu>
 			</el-menu>
 		</el-col>
@@ -28,23 +34,27 @@
 
 <script>
 	import Hamburger from "@/components/Hamburger";
+	import Lang from "@/components/Language";
 	import Breadcrumb from "./Breadcrumb";
-	import { mapGetters } from "vuex";
+	import { mapGetters, mapState, mapActions } from "vuex";
 	export default {
 		data() {
 			return {};
 		},
 		components: {
 			Hamburger,
-			Breadcrumb
+			Breadcrumb,
+			Lang
 		},
 		computed: {
+			...mapState("lang", ["languages", "currentLang"]),
 			...mapGetters(["sidebar", "avatar"]),
 			active() {
 				return this.$route.path;
 			}
 		},
 		methods: {
+			...mapActions("lang", ["setLang"]),
 			handleSelect(key, keyPath) {
 				console.log(key, keyPath);
 			},
@@ -56,6 +66,10 @@
 				this.$router.replace({
 					path: `/login?redirect=${this.$route.fullPath}`
 				});
+			},
+
+			clickLang(lang) {
+				this.setLang(lang);
 			}
 		}
 	};

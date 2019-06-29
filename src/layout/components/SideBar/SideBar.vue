@@ -14,7 +14,7 @@
 				<el-menu-item :index="resolvePath(onlyOneChild.path)">
 					<Item
 						:icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-						:title="onlyOneChild.meta.title"
+						:title="handleLang(onlyOneChild.meta.title)"
 					/>
 				</el-menu-item>
 			</Link>
@@ -23,7 +23,7 @@
 		<!-- 若是没有需要显示 item 那么继续处理children -->
 		<el-submenu v-else :index="resolvePath(item.path)">
 			<template slot="title">
-				<Item :icon="item.meta&&item.meta.icon" :title="item.meta.title"/>
+				<Item :icon="item.meta&&item.meta.icon" :title="handleLang(item.meta.title)"/>
 			</template>
 			<SideBar
 				v-for="child in item.children"
@@ -67,6 +67,9 @@
 			};
 		},
 		methods: {
+			handleLang(title) {
+				return this.$t(`global.${title.trim().toLocaleLowerCase()}`);
+			},
 			hasShowChild(children = [], current) {
 				// 过滤隐藏的路由
 				const showChild = children.filter(item => {
