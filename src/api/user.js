@@ -8,14 +8,14 @@ export function getInfoApi(token) {
   })
 }
 
-export function login(data) {
+export function loginApi(data) {
   return request({
     url: '/user/login',
     method: 'post',
     data
   })
 }
-export function logout() {
+export function logoutApi() {
   return request({
     url: '/user/logout',
     method: 'post',

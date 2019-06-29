@@ -5,8 +5,8 @@
 				<span
 					v-if="item.redirect==='noRedirect' || index===items.length-1 || (item.redirect && item.redirect === $route.path)"
 					class="no-redirect"
-				>{{item.meta.title}}</span>
-				<a v-else @click.prevent="handleLink(item)">{{item.meta.title}}</a>
+				>{{handleLang(item.meta.title)}}</span>
+				<a v-else @click.prevent="handleLink(item)">{{handleLang(item.meta.title)}}</a>
 			</el-breadcrumb-item>
 		</transition-group>
 	</el-breadcrumb>
@@ -36,6 +36,11 @@
 			}
 		},
 		methods: {
+			handleLang(title) {
+				return this.$t(
+					`global.${title.trim().toLocaleLowerCase()}`
+				);
+			},
 			// 获取标签
 			getBreadcrumb() {
 				var tmp = [];
@@ -47,8 +52,8 @@
 						item.meta.breadcrumb !== false;
 
 					if (bool && !tmp.includes(item.meta.title)) {
-            item.meta && tmp.push(item.meta.title);
-            return true
+						item.meta && tmp.push(item.meta.title);
+						return true;
 					}
 					return false;
 				});

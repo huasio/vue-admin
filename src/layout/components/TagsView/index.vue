@@ -10,7 +10,7 @@
 					ref="tag"
 				>
 					<template slot="label">
-						<router-link :to="tag.path" tag="span" class="c">{{tag.title}}</router-link>
+						<router-link :to="tag.path" tag="span" class="c">{{handleLang(tag.title)}}</router-link>
 					</template>
 				</el-tab-pane>
 			</el-tabs>
@@ -24,7 +24,7 @@
 						@click="refreshSelectTag"
 						circle
 						icon="el-icon-refresh"
-						title="刷新当前标签"
+						:title="$t('general.refresh')"
 					></el-button>
 				</el-badge>
 				<el-badge :value="visitedViews.length" class="item">
@@ -34,7 +34,7 @@
 						@click="closeAllViews"
 						circle
 						icon="el-icon-delete"
-						title="关闭全部标签"
+						:title="$t('general.down_all_tags')"
 					></el-button>
 				</el-badge>
 			</el-row>
@@ -72,6 +72,9 @@
 				"deleteCacheView",
 				"deleteAllViews"
 			]),
+			handleLang(title) {
+				return this.$t(`global.${title.trim().toLocaleLowerCase()}`);
+			},
 			initTags() {
 				const affixTags = (this.affixTags = this.filterAffix(this.routes));
 				for (const tag of affixTags) {
