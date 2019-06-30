@@ -36,6 +36,21 @@ export default {
     logout: 'Logout',
     profile: {
       user: "Profile",
+      subtitle: 'Base information',
+      intro: 'Introduction',
+      role: 'Role',
+      user_name: '@:login.user',
+      account: 'Account',
+      phone: 'Phone',
+      email: 'Email',
+      udpate: 'Update account'
+    },
+    security: {
+      title: 'Security',
+      old_pass: 'Old password',
+      new_pass: 'New password',
+      repeat_pass: 'Confirm new password',
+      update: 'Update password'
     },
     dashboard: {
       title: 'Dashboard'

@@ -11,7 +11,7 @@ export default {
           'zh-CN': '简体中文',
           'en-US': 'English'
         }
-      }
+      },
     },
     login: {
       title: '登录',
@@ -33,9 +33,25 @@ export default {
       permission: '@:permission.title',
       roles: '@:permission.roles'
     },
-    logout: '退出',
+    logout: '退出登录',
     profile: {
       user: "个人中心",
+      subtitle: '基本信息',
+      intro: '个人简介',
+      role: '角色',
+      user_name: '@:login.user',
+      account: '账号信息',
+      phone: '手机号码',
+      email: '邮箱',
+      pass: '@:login.pass',
+      update: '更新信息'
+    },
+    security: {
+      title: '安全',
+      old_pass: '旧密码',
+      new_pass: '新密码',
+      repeat_pass: '确认新密码',
+      update: '更新密码'
     },
     dashboard: {
       title: '仪表板'

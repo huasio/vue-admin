@@ -1,6 +1,6 @@
 <template>
 	<el-breadcrumb separator="/" class="app-breadcrumb">
-		<transition-group name="breadcurmb">
+		<transition-group name="breadcrumb">
 			<el-breadcrumb-item v-for="(item, index) in items" :key="item.path">
 				<span
 					v-if="item.redirect==='noRedirect' || index===items.length-1 || (item.redirect && item.redirect === $route.path)"
@@ -37,9 +37,7 @@
 		},
 		methods: {
 			handleLang(title) {
-				return this.$t(
-					`global.${title.trim().toLocaleLowerCase()}`
-				);
+				return this.$t(`global.${title.trim().toLocaleLowerCase()}`);
 			},
 			// 获取标签
 			getBreadcrumb() {
@@ -97,7 +95,7 @@
 	};
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.app-breadcrumb.el-breadcrumb {
 		display: inline-block;
 		font-size: 14px;
@@ -131,5 +129,11 @@
 
 	.breadcrumb-leave-active {
 		position: absolute;
+	}
+	.no-redirect {
+		color: #97a8be;
+	}
+	.el-breadcrumb__inner a {
+		font-weight: 500 !important;
 	}
 </style>

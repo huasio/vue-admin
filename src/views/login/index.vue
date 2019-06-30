@@ -83,6 +83,7 @@
 <script>
 	import { mapState, mapActions } from "vuex";
 	import Lang from "@/components/Language";
+	import { listenCapsLock } from "@/utils/tools";
 	/**
 	 * 1. 密码可见
 	 * 2. 点击 button 之后，button 进入 loading
@@ -178,13 +179,7 @@
 			 *
 			 */
 			listenKey({ key }) {
-				if (key && key.length === 1) {
-					if (key >= "A" && key <= "Z") {
-						this.capsLock = true;
-					} else {
-						this.capsLock = false;
-					}
-				}
+				const isCapsLock = (this.capsLock = listenCapsLock(key));
 				if (key === "CapsLock" && this.capsLock) {
 					this.capsLock = false;
 				}
@@ -209,9 +204,8 @@
 </script>
 <style scoped>
 	.form-main {
-		background: url(https://konachan.net/sample/ccceb7b7c3e2a2b77c2a6e8580c3c12f/Konachan.com%20-%20284958%20sample.jpg)
-			no-repeat center center/cover;
-		background-attchment: fixed;
+		background: url("~@/assets/img/login-background.jpg") no-repeat center
+			center/cover;
 	}
 	.form-main {
 		height: 100vh;

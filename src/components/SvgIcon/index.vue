@@ -51,12 +51,12 @@
 
 <style scoped>
 	.svg-icon {
-		width: 1.4em;
-		height: 1.4em;
+		width: 1.2em;
+		height: 1.2em;
 		vertical-align: -0.35em;
 		fill: currentColor;
 		overflow: hidden;
-		padding-right: 0.54em;
+		padding-right: 1em;
 	}
 
 	.svg-external-icon {
