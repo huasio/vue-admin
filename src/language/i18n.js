@@ -6,7 +6,7 @@ import axios from 'axios'
 Vue.use(VueI18n)
 
 // 支持语言
-export const lang = ['zh-CN', 'en-US'];
+export const lang = ['zh-CN', 'en'];
 
 // 初始加载语言
 export const i18n = new VueI18n({
@@ -17,14 +17,13 @@ export const i18n = new VueI18n({
 
 // 热重载
 if (module.hot) {
-  module.hot.accept(['@/language/langs/zh-CN', '@/language/langs/en-US',], function () {
+  module.hot.accept(['@/language/langs/zh-CN', '@/language/langs/en',], function () {
     import('@/language/langs/zh-CN').then(msgs => {
       return i18n.setLocaleMessage('zh-CN', msgs.default['zh-CN'])
     })
-    import('@/language/langs/en-US').then(msgs => {
-      return i18n.setLocaleMessage('en-US', msgs.default['en-US'])
+    import('@/language/langs/en').then(msgs => {
+      return i18n.setLocaleMessage('en', msgs.default['en'])
     })
-
   })
 }
 

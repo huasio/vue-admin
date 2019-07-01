@@ -1,38 +1,21 @@
 <template>
 	<div id="Security">
-		<el-form>
-			<el-form-item :label="$t('security.old_pass')">
-				<el-tooltip class="item" effect="dark" content="Right Center 提示文字" placement="top">
-					<el-input type="text" placeholder v-model="old_pass" maxlength="16" show-word-limit></el-input>
-				</el-tooltip>
-			</el-form-item>
-			<el-form-item :label="$t('security.new_pass')">
-				<el-tooltip class="item" effect="dark" content="Right Center 提示文字" placement="top">
-					<el-input type="text" placeholder v-model="new_pass" maxlength="16" show-word-limit></el-input>
-				</el-tooltip>
-			</el-form-item>
-			<el-form-item :label="$t('security.repeat_pass')">
-				<el-tooltip class="item" effect="dark" content="Right Center 提示文字" placement="top">
-					<el-input type="text" placeholder v-model="confirm_pass" maxlength="16" show-word-limit></el-input>
-				</el-tooltip>
-			</el-form-item>
-
-			<el-form-item class="update-btn">
-				<el-button type="primary">{{$t('security.update')}}</el-button>
-			</el-form-item>
-		</el-form>
+		<el-row>
+			<PasswordForm />
+		</el-row>
 	</div>
 </template>
 
 <script>
+	import PasswordForm from "./SecurityFrom";
 	export default {
+		components: {
+			PasswordForm
+		},
 		data() {
-			return {
-				old_pass: "",
-				new_pass: "",
-				confirm_pass: ""
-			};
-		}
+			return {};
+		},
+		methods: {}
 	};
 </script>
 

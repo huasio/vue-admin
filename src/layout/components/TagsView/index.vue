@@ -24,7 +24,7 @@
 						@click="refreshSelectTag"
 						circle
 						icon="el-icon-refresh"
-						:title="$t('general.refresh')"
+						:title="$t('global.refresh')"
 					></el-button>
 				</el-badge>
 				<el-badge :value="visitedViews.length" class="item">
@@ -34,7 +34,7 @@
 						@click="closeAllViews"
 						circle
 						icon="el-icon-delete"
-						:title="$t('general.down_all_tags')"
+						:title="$t('global.down_all_tags')"
 					></el-button>
 				</el-badge>
 			</el-row>

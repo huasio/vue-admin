@@ -6,7 +6,7 @@
 		<el-row type="flex" justify="center">
 			<div class="profile-image">
 				<el-image :src="user.avatar"></el-image>
-				<p class="profile-name" :title="$t('profile.user_name')">{{user.name}}</p>
+				<p class="profile-name" :title="$t('profile.user')">{{user.name}}</p>
 				<el-breadcrumb separator="/" class="profile-role" :title="$t('profile.role')">
 					<el-breadcrumb-item v-for="(role,index) in user.roles" :key="index">{{role}}</el-breadcrumb-item>
 				</el-breadcrumb>

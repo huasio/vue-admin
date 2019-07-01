@@ -10,7 +10,7 @@
 				:command="lang"
 				:key="index"
 				:disabled="currentLang === lang"
-			>{{$t(`general.lang.languages.${lang}`)}}</el-dropdown-item>
+			>{{$t(`global.lang.languages.${lang}`)}}</el-dropdown-item>
 		</el-dropdown-menu>
 	</el-dropdown>
 </template>
@@ -20,7 +20,7 @@
 		props: {
 			title: {
 				type: String,
-				default: '语言'
+				default: "语言"
 			},
 			languages: {
 				type: [Array, Object],
@@ -39,8 +39,15 @@
 	};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 	.el-dropdown-link {
 		cursor: pointer;
+	}
+	.el-popper {
+		padding: 6px 0 !important;
+		margin-top: 0 !important;
+		li {
+			word-break: keep-all;
+		}
 	}
 </style>

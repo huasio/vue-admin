@@ -1,13 +1,13 @@
 <template>
 	<div id="account">
 		<el-form>
-			<el-form-item :label="$t('profile.user_name')">
+			<el-form-item :label="$t('profile.user')">
 				<el-input type="text" v-model="name" maxlength="21" show-word-limit></el-input>
 			</el-form-item>
-			<el-form-item :label="$t('profile.phone')">
+			<el-form-item :label="$t('profile.account.phone')">
 				<el-input type="text" v-model="phone" maxlength="11" show-word-limit></el-input>
 			</el-form-item>
-			<el-form-item :label="$t('profile.email')">
+			<el-form-item :label="$t('profile.account.email')">
 				<el-input type="text" v-model="email" maxlength="66" show-word-limit></el-input>
 			</el-form-item>
 			<el-form-item :label="$t('profile.intro')">
@@ -20,7 +20,7 @@
 				></el-input>
 			</el-form-item>
 			<el-form-item class="update-btn">
-				<el-button type="primary">{{$t('profile.update')}}</el-button>
+				<el-button type="primary">{{$t('profile.account.update')}}</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -33,9 +33,7 @@
 				type: Object,
 				default: () => {
 					return {
-						avatar: "",
 						name: "",
-						role: "",
 						introduction: "",
 						phone: "",
 						email: ""

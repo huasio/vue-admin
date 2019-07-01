@@ -12,17 +12,17 @@
 					:current-lang="currentLang"
 					:languages="languages"
 					@clickLang="clickLang"
-					:title="$t('general.lang.title')"
+					:title="$t('global.lang.title')"
 				/>
 
 				<el-dropdown trigger="click" class="avatar-dropdown" @command="handleDropdown">
 					<span class="el-dropdown-link">
-						<img :src="avatar" class="avatar" width="40" height="40" alt />
+						<img :src="user.avatar" class="avatar" width="40" height="40" alt />
 						<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<Link to="/profile/index">
-							<el-dropdown-item>{{$t('profile.user')}}</el-dropdown-item>
+							<el-dropdown-item>{{$t('profile.title')}}</el-dropdown-item>
 						</Link>
 						<el-dropdown-item command="logout" divided>{{$t('logout')}}</el-dropdown-item>
 					</el-dropdown-menu>
@@ -50,7 +50,7 @@
 		},
 		computed: {
 			...mapState("lang", ["languages", "currentLang"]),
-			...mapGetters(["sidebar", "avatar"]),
+			...mapGetters(["sidebar", "user"]),
 			active() {
 				return this.$route.path;
 			}
@@ -109,6 +109,9 @@
 	.el-popper {
 		padding: 6px 0 !important;
 		margin-top: 0 !important;
+		li {
+			word-break: keep-all;
+		}
 		a {
 			text-decoration: none !important;
 		}

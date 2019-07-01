@@ -4,7 +4,7 @@ export function getInfoApi(token) {
   return request({
     url: '/user/info',
     method: 'post',
-    params: { token }
+    data: { token }
   })
 }
 
@@ -19,6 +19,17 @@ export function logoutApi() {
   return request({
     url: '/user/logout',
     method: 'post',
+  })
+}
+
+export function updateApi(token, data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data: {
+      ...data,
+      token
+    }
   })
 }
 
