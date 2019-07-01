@@ -17,7 +17,7 @@
 											:current-lang="currentLang"
 											:languages="languages"
 											@clickLang="clickLang"
-											:title="$t('general.lang.title')"
+											:title="$t('global.lang.title')"
 										/>
 									</el-row>
 								</el-col>
@@ -31,14 +31,14 @@
 									tabindex="1"
 									v-model="ruleForm.user"
 									autocomplete="on"
-									:placeholder="$t('login.message.user_required')"
+									:placeholder="$t('validations.user_required')"
 									prefix-icon="el-icon-user-solid"
 								></el-input>
 							</el-form-item>
 							<el-tooltip
 								v-model="capsLock"
 								class="item"
-								:content="$t('login.message.caps_lock')"
+								:content="$t('validations.caps_lock')"
 								effect="dark"
 								placement="right-end"
 								manual
@@ -49,7 +49,7 @@
 										tabindex="2"
 										ref="pass"
 										v-model="ruleForm.pass"
-										:placeholder="$t('login.message.pass_requried')"
+										:placeholder="$t('validations.pass_requried')"
 										autocomplete="on"
 										:show-password="true"
 										@keyup.native="listenKey"
@@ -82,13 +82,8 @@
 
 <script>
 	import { mapState, mapActions } from "vuex";
+	import { listenCapsLock } from "@/utils/tools";
 	import Lang from "@/components/Language";
-	/**
-	 * 1. 密码可见
-	 * 2. 点击 button 之后，button 进入 loading
-	 * 3. 大写锁定提示
-	 * 4. 输入框自动获取焦点
-	 */
 	export default {
 		components: {
 			Lang
@@ -96,18 +91,18 @@
 		data() {
 			var validatePass = (rule, value, callback) => {
 				if (value === "") {
-					callback(new Error(this.$t("login.message.pass_requried")));
+					callback(new Error(this.$t("validations.pass_requried")));
 				} else if (value.length < 6) {
-					callback(new Error(this.$t("login.message.pass_min")));
+					callback(new Error(this.$t("validations.pass_min")));
 				} else if (value.length > 16) {
-					callback(new Error(this.$t("login.message.pass_max")));
+					callback(new Error(this.$t("validations.pass_max")));
 				} else {
 					callback();
 				}
 			};
 			var validationUser = (rule, value, callback) => {
 				if (value === "") {
-					callback(new Error(this.$t("login.message.user_required")));
+					callback(new Error(this.$t("validations.user_required")));
 				} else {
 					callback();
 				}
@@ -178,13 +173,7 @@
 			 *
 			 */
 			listenKey({ key }) {
-				if (key && key.length === 1) {
-					if (key >= "A" && key <= "Z") {
-						this.capsLock = true;
-					} else {
-						this.capsLock = false;
-					}
-				}
+				const isCapsLock = (this.capsLock = listenCapsLock(key));
 				if (key === "CapsLock" && this.capsLock) {
 					this.capsLock = false;
 				}
@@ -209,9 +198,8 @@
 </script>
 <style scoped>
 	.form-main {
-		background: url(https://konachan.net/sample/ccceb7b7c3e2a2b77c2a6e8580c3c12f/Konachan.com%20-%20284958%20sample.jpg)
-			no-repeat center center/cover;
-		background-attchment: fixed;
+		background: url("~@/assets/img/login-background.jpg") no-repeat center
+			center/cover;
 	}
 	.form-main {
 		height: 100vh;

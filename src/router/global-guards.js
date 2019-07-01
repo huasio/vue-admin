@@ -29,15 +29,15 @@ router.beforeEach(async (to, from, next) => {
     if (to.path == '/login') {
       next({ path: '/' })
     } else {
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      const hasPermissions = store.getters.permissions && store.getters.permissions.length > 0
 
-      if (hasRoles) {
+      if (hasPermissions) {
         next()
       } else {
         try {
-          const { roles } = await store.dispatch('user/getInfo')
+          const { permissions } = await store.dispatch('user/getInfo')
 
-          const generateRouter = await store.dispatch('permissions/generateRouter', roles)
+          const generateRouter = await store.dispatch('permissions/generateRouter', permissions)
 
           router.addRoutes(generateRouter)
           next({ ...to, replace: true })

@@ -23,7 +23,7 @@
 		<!-- 若是没有需要显示 item 那么继续处理children -->
 		<el-submenu v-else :index="resolvePath(item.path)">
 			<template slot="title">
-				<Item :icon="item.meta&&item.meta.icon" :title="handleLang(item.meta.title)"/>
+				<Item :icon="item.meta&&item.meta.icon" :title="handleLang(item.meta.title)" />
 			</template>
 			<SideBar
 				v-for="child in item.children"
@@ -37,7 +37,7 @@
 
 <script>
 	import path from "path";
-	import Link from "./Link";
+	import Link from "@/components/Link";
 	import Item from "./Item";
 	import { isExternal } from "@/utils/validations";
 	export default {

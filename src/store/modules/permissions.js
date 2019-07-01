@@ -6,9 +6,9 @@ import { noHandleRoutes, dynamicRoutes } from '@/router/router'
  * @param {array} roles 用户路由权限
  * @return {bool} true|false
  */
-function hasPermissions (route, roles) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+function hasPermissions (route, permissions) {
+  if (route.meta && route.meta.permissions) {
+    return permissions.some(role => route.meta.permissions.includes(role))
   } else {
     return true
   }
@@ -19,14 +19,14 @@ function hasPermissions (route, roles) {
  * @param {object} routes 路由规则
  * @param {array} roles 用户路由规则
  */
-function filterRoutes (routes, roles) {
+function filterRoutes (routes, permissions) {
   const res = []
 
   routes.forEach(route => {
-    if (hasPermissions(route, roles)) {
+    if (hasPermissions(route, permissions)) {
       const tmp = { ...route }
       if (route.children) {
-        tmp.children = filterRoutes(route.children, roles)
+        tmp.children = filterRoutes(route.children, permissions)
       }
       res.push(tmp)
     }
@@ -48,13 +48,13 @@ const mutations = {
 }
 
 const actions = {
-  generateRouter ({ commit }, roles) {
+  generateRouter ({ commit }, permissions) {
     return new Promise((resolve, reject) => {
       let accessRoutes
-      if (roles.includes('admin')) {
+      if (permissions.includes('admin')) {
         accessRoutes = dynamicRoutes || []
       } else {
-        accessRoutes = filterRoutes(dynamicRoutes, roles)
+        accessRoutes = filterRoutes(dynamicRoutes, permissions)
       }
 
       commit('SET_ROUTES', accessRoutes)

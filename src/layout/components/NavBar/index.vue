@@ -1,33 +1,33 @@
 <template>
 	<el-row type="flex" justify="space-around">
 		<el-col class="hamburger">
-			<Hamburger @toggleClick="toggleSideBar" :status="sidebar"/>
+			<Hamburger @toggleClick="toggleSideBar" :status="sidebar" />
 		</el-col>
 		<el-col :sm="{span:16}" :xs="{span:0}">
-			<Breadcrumb/>
+			<Breadcrumb />
 		</el-col>
 		<el-col :sm="{span:7}" :xs="{span:22}">
-			<el-menu
-				:default-active="active"
-				class="el-menu-demo"
-				mode="horizontal"
-				@select="handleSelect"
-				:router="true"
-			>
+			<el-row type="flex" justify="end">
 				<Lang
 					:current-lang="currentLang"
 					:languages="languages"
 					@clickLang="clickLang"
-					:title="$t('general.lang.title')"
+					:title="$t('global.lang.title')"
 				/>
-				<el-submenu index="4-1">
-					<template slot="title">
-						<img :src="avatar" class="avatar" width="40" height="40" alt>
-					</template>
-					<el-menu-item index="/profile/index">{{$t('profile.user')}}</el-menu-item>
-					<el-menu-item @click="logout" index>{{$t('logout')}}</el-menu-item>
-				</el-submenu>
-			</el-menu>
+
+				<el-dropdown trigger="click" class="avatar-dropdown" @command="handleDropdown">
+					<span class="el-dropdown-link">
+						<img :src="user.avatar" class="avatar" width="40" height="40" alt />
+						<i class="el-icon-caret-bottom el-icon--right"></i>
+					</span>
+					<el-dropdown-menu slot="dropdown">
+						<Link to="/profile/index">
+							<el-dropdown-item>{{$t('profile.title')}}</el-dropdown-item>
+						</Link>
+						<el-dropdown-item command="logout" divided>{{$t('logout')}}</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+			</el-row>
 		</el-col>
 	</el-row>
 </template>
@@ -37,6 +37,7 @@
 	import Lang from "@/components/Language";
 	import Breadcrumb from "./Breadcrumb";
 	import { mapGetters, mapState, mapActions } from "vuex";
+	import Link from "@/components/Link";
 	export default {
 		data() {
 			return {};
@@ -44,11 +45,12 @@
 		components: {
 			Hamburger,
 			Breadcrumb,
-			Lang
+			Lang,
+			Link
 		},
 		computed: {
 			...mapState("lang", ["languages", "currentLang"]),
-			...mapGetters(["sidebar", "avatar"]),
+			...mapGetters(["sidebar", "user"]),
 			active() {
 				return this.$route.path;
 			}
@@ -61,11 +63,13 @@
 			toggleSideBar() {
 				this.$store.dispatch("app/toggleSideBar");
 			},
-			async logout() {
-				await this.$store.dispatch("user/logout");
-				this.$router.replace({
-					path: `/login?redirect=${this.$route.fullPath}`
-				});
+			async handleDropdown(command) {
+				if (command === "logout") {
+					await this.$store.dispatch("user/logout");
+					this.$router.replace({
+						path: `/login?redirect=${this.$route.fullPath}`
+					});
+				}
 			},
 
 			clickLang(lang) {
@@ -94,5 +98,28 @@
 	}
 	.el-menu {
 		background-color: initial !important;
+	}
+	.avatar-dropdown {
+		border-radius: 6px;
+		padding-top: 9px;
+		margin-right: 10px;
+		margin-left: 20px;
+		cursor: pointer;
+	}
+	.el-popper {
+		padding: 6px 0 !important;
+		margin-top: 0 !important;
+		li {
+			word-break: keep-all;
+		}
+		a {
+			text-decoration: none !important;
+		}
+		.el-dropdown-menu__item--divided {
+			margin-top: 0px;
+		}
+		.el-dropdown-menu__item--divided:before {
+			height: 0px;
+		}
 	}
 </style>

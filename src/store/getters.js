@@ -1,10 +1,9 @@
 
 const getters = {
   token: state => state.user.token,
-  name: state => state.user.name,
-  introduction: state => state.user.introduction,
+  user: state => state.user.info,
   roles: state => state.user.roles,
-  avatar: state => state.user.avatar,
+  permissions: state => state.user.permissions,
   sidebar: state => state.app.sideBarStatus,
   permission_routes: state => state.permissions.routes,
   visitedViews: state => state.tagsView.visitedViews
