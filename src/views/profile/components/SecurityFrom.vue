@@ -128,13 +128,32 @@
 								new: this.form.newPass
 							})
 							.then(res => {
-								console.log(res);
 								this.loading = false;
 								this.$refs.form.resetFields();
+								if (res.code === 20000) {
+									var msg = {
+										type: "success",
+										title: "成功"
+									};
+								} else {
+									var msg = {
+										type: "error",
+										title: "错误"
+									};
+                }
+
+								this.$notify({
+									...msg,
+									message: res.message
+								});
 							})
 							.catch(error => {
 								console.log(error);
 								this.loading = false;
+								this.$notify.error({
+									title: "错误",
+									message: error
+								});
 							});
 					} else {
 						this.loading = false;
