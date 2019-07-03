@@ -12,6 +12,9 @@ export default {
     general: {
       save: '提交',
       reset: '重置',
+      editor: '编辑',
+      delete: '删除',
+      add: '添加'
     },
     login: {
       title: '登录',
@@ -24,7 +27,7 @@ export default {
       dashboard: '@:dashboard.title',
       profile: '@:profile.title',
       permission: '@:permission.title',
-      roles: '@:permission.roles.title',
+      role: '@:permission.role.title',
       refresh: '刷新当前标签',
       down_all_tags: '关闭全部标签',
       lang: {
@@ -62,8 +65,12 @@ export default {
     },
     permission: {
       title: '权限管理',
-      roles: {
-        title: '角色列表'
+      role: {
+        title: '角色列表',
+        role_name: '角色名称',
+        description: '描述',
+        operation: '操作',
+        add_role: '新增角色'
       }
     }
   }

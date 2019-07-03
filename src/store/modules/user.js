@@ -73,26 +73,28 @@ const actions = {
   update({ commit }, payload) {
     return new Promise((resolve, reject) => {
       updateApi(state.token, payload).then(response => {
-        const { data } = response
         let tmp = {}
-        for (const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(response.data)) {
           if (state.info.hasOwnProperty(key)) {
             tmp[key] = value
           }
         }
         commit('SET_USER_INFO', Object.assign(state.info, tmp))
-        resolve(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
     })
   },
   updatePass({ state }, data) {
-    updateApi(state.token, data).then((resolve, reject) => {
-      resolve()
-    }).catch(error => {
-      reject(error)
+    return new Promise((resolve, reject) => {
+      updateApi(state.token, data).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
     })
+
   }
 }
 export default {

@@ -76,9 +76,9 @@ export const dynamicRoutes = [
     children: [
       {
         path: '/permissions/roles',
-        name: 'Roles',
-        component: () => import('@/views/permissions/roles'),
-        meta: { title: 'Roles', permissions: ['permissions'] }
+        name: 'Role',
+        component: () => import('@/views/permissions/role'),
+        meta: { title: 'Role', permissions: ['permissions'] }
       }
     ]
   },

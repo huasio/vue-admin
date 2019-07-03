@@ -11,6 +11,9 @@ export default {
     general: {
       save: 'Save',
       reset: 'Reset',
+      editor: 'Editor',
+      delete: 'Delete',
+      add: 'Add'
     },
     login: {
       title: 'Login',
@@ -23,13 +26,13 @@ export default {
       dashboard: '@:dashboard.title',
       profile: '@:profile.title',
       permission: '@:permission.title',
-      roles: '@:permission.roles.title',
+      role: '@:permission.role.title',
       refresh: 'Refresh current tag',
       down_all_tags: 'Shut down all tags',
       lang: {
         title: 'Language',
         languages: {
-          'zh-CN': 'Chinese',
+          'zh-CN': '简体中文',
           'en': 'English'
         }
       }
@@ -60,8 +63,12 @@ export default {
     },
     permission: {
       title: 'Permission',
-      roles: {
-        title: 'Roles'
+      role: {
+        title: 'Role',
+        role_name: 'Role Name',
+        description: 'Description',
+        operation: 'Operation',
+        add_role: 'New Role'
       }
     }
   }

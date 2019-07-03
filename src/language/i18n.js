@@ -18,6 +18,8 @@ export const i18n = new VueI18n({
 // 热重载
 if (module.hot) {
   module.hot.accept(['@/language/langs/zh-CN', '@/language/langs/en',], function () {
+    const langFiles = require.context('./langs', false, /\.js$/)
+    console.log(langFiles)
     import('@/language/langs/zh-CN').then(msgs => {
       return i18n.setLocaleMessage('zh-CN', msgs.default['zh-CN'])
     })
