@@ -71,6 +71,7 @@ export const dynamicRoutes = [
       title: 'Permission', icon: 'permission',
       permissions: ['admin', 'permissions', 'roles']
     },
+    name: 'Permission',
     alwaysShow: true,
     redirect: '/permissions/roles',
     children: [

@@ -65,10 +65,16 @@ export default {
       title: 'Permission',
       role: {
         title: 'Role',
-        role_name: 'Role Name',
+        name: 'Role Name',
         description: 'Description',
         operation: 'Operation',
-        add_role: 'New Role'
+        add_role: 'New Role',
+        edit: 'Edit Role',
+        cancel: 'Cancel',
+        confirm: 'Confirm',
+        confirm_delete: 'Confirm delete {name} ？',
+        search: 'Enter keywords for filtering',
+        menu: 'Menu',
       }
     }
   }
