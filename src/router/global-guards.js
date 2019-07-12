@@ -44,7 +44,6 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           await store.dispatch('user/resetToken')
           Message.error(error || '全局前置钩子这里有误')
-          next()
 
           next({ path: `/login?redirect=${to.path}` })
           NProgress.done()
@@ -55,7 +54,6 @@ router.beforeEach(async (to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next()
       next({ path: `/login?redirect=${to.path}` })
       NProgress.done()
     }

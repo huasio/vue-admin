@@ -67,10 +67,17 @@ export default {
       title: '权限管理',
       role: {
         title: '角色列表',
-        role_name: '角色名称',
+        id: '#',
+        name: '角色名称',
         description: '描述',
         operation: '操作',
-        add_role: '新增角色'
+        add_role: '新增角色',
+        edit: '编辑角色',
+        cancel: '取消',
+        confirm: '确定',
+        confirm_delete: '确定删除 {name} ？',
+        search: '输入关键字进行过滤',
+        menu: '菜单',
       }
     }
   }
